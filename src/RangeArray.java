@@ -1,14 +1,14 @@
 
-public class RangeArray {
+public class RangeArray<T> {
     int indexMin;
     int indexMax;
-    int elements[];
+    Object elements[];
 
     public RangeArray(int indexMin, int indexMax) {
         if (indexMax < indexMin) throw new RuntimeException ("indexMax < indexMin");
         this.indexMin = indexMin;
         this.indexMax = indexMax;
-        elements= new int[rangeSize()];
+        elements= new Object[rangeSize()];
     }
 
     public int getIndexMin() { return indexMin; }
@@ -22,15 +22,16 @@ public class RangeArray {
     }
 
 
-    public void set(int index, int value) {
+    public void set(int index, T value) {
         checkIndex (index);
         int realIndex= realIndex (index);
         elements[realIndex]= value;
     }
 
-    public int get (int index) {
+    @SuppressWarnings ("uncheck")
+    public T get (int index) {
         checkIndex (index);
         int realIndex= realIndex (index);
-        return elements[realIndex];
+        return (T) elements[realIndex];
     }
 }
