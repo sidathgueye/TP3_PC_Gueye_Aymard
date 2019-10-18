@@ -1,5 +1,6 @@
+import java.util.Iterator;
 
-public class RangeArray<T> {
+public class RangeArray<T> implements Iterable<T>{
     int indexMin;
     int indexMax;
     Object elements[];
@@ -28,10 +29,36 @@ public class RangeArray<T> {
         elements[realIndex]= value;
     }
 
-    @SuppressWarnings ("uncheck")
+
     public T get (int index) {
         checkIndex (index);
         int realIndex= realIndex (index);
         return (T) elements[realIndex];
+    }
+
+    public Iterator<T> iterator (){
+        return new RangeArrayIterator();
+    }
+
+
+    private class RangeArrayIterator implements Iterator<T> {
+       private int nextIndex;
+        //private RangeArray<T> rangeArray;
+
+        public RangeArrayIterator() {
+          //  this.rangeArray = rangeArray;
+            nextIndex = getIndexMin();
+        }
+
+        @Override
+        public boolean hasNext() {
+            return nextIndex <= getIndexMax();
+        }
+        @Override
+        public T next(){
+            T result = get(nextIndex);
+            nextIndex++;
+            return result;
+        }
     }
 }
